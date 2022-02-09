@@ -200,7 +200,7 @@ export class ContentDeliveryAPI implements IContentDeliveryAPi
         if (expand) url.searchParams.set('expand', expand.map(s => encodeURIComponent(s)).join(','));
 
         // Perform request
-        return this.doAdvancedRequest<C>(url).then(r => { 
+        return this.doAdvancedRequest<C>(url,{params : {supportRedirect:false}}).then(r => { 
             const c = r[0];
             c.serverContext = {
                 propertyDataType: 'IContentDeliveryResponseContext',
@@ -456,8 +456,9 @@ export class ContentDeliveryAPI implements IContentDeliveryAPi
                 //redirect support. Experimental since may also fire potentially in other cases
                 //will need to redefine requirement later
                 var responseData = response.data as unknown  as  IContent;
-                if (responseData.url != null && responseData.url != '/' &&
-                        location.pathname && responseData.url != location.pathname){                      
+               if (response && response.data
+                         && (!options || options == {} || (options.params &&
+                                 options.params.supportRedirect !== false))){                   
                         console.info('Redirecting to ',location.origin + responseData.url);
                         location.href = location.origin + responseData.url;
                     }
