@@ -77,12 +77,7 @@ const ElementNavigation : React.FunctionComponent = (props) : React.ReactElement
             if (newPath === location.pathname) {
                 if (config.enableDebug) console.info('ElementNavigation: Ignoring navigation to same path');
                 if (document && hash){
-                    window.location.replace(hash);                    
-                    let localHash = hash.slice(1);
-                    const element = document.getElementById(localHash);
-                    if (element) {
-                        element.scrollIntoView();
-                    }
+                    window.location.replace(hash);
                 }
                 event.preventDefault();
                 return false;
