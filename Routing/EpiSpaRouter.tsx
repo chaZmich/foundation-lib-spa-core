@@ -47,6 +47,9 @@ const ElementNavigation : React.FunctionComponent = (props) : React.ReactElement
         } else {
             if (epi.isDebugActive()) console.info('ElementNavigation: Enabling catch-all click handling for navigation');
         }
+        const onFocus = (event: FocusEvent) => {
+            console.log(event);
+        } 
         const onWindowClick = (event: MouseEvent) => {
             const target: HTMLElement = (event.target as any) as HTMLElement;
             const currentUrl: URL = new URL(window.location.href);
@@ -115,6 +118,7 @@ const ElementNavigation : React.FunctionComponent = (props) : React.ReactElement
             if (epi.isDebugActive()) console.warn('ElementNavigation: Failed to scroll to top');
         }
         document.addEventListener('click', onWindowClick);
+        document.addEventListener('focus', onFocus);
         return () => {
             if (epi.isDebugActive()) console.info('ElementNavigation: Removing catch-all click handling for navigation');
             document.removeEventListener('click', onWindowClick);
