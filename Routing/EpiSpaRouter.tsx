@@ -62,6 +62,13 @@ const ElementNavigation : React.FunctionComponent = (props) : React.ReactElement
 
                 // Only act if we remain on the same domain
                 if (targetUrl.origin === currentUrl.origin) {
+                    if (targetUrl.pathname.toLowerCase().endsWith('pdf'))
+                    {
+                        console.log('PDF link clicked, redirecting');
+                        window.location.pathname = targetUrl.pathname;
+                        //window.location.reload();
+                        return;
+                    }
                     newPath = targetUrl.pathname;
                     hash = targetUrl.hash;
                     let linkElement = (link as HTMLAnchorElement);
