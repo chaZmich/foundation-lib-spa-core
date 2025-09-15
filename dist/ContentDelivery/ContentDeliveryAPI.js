@@ -158,8 +158,8 @@ export class ContentDeliveryAPI {
             if (expand)
                 url.searchParams.set('expand', expand.map(s => encodeURIComponent(s)).join(','));
             return this.doRequest(url).catch(e => {
-                console.log('404 redrect fired', window.location.href);
-                return this.doRequest(this.BaseURL + '404');
+                console.log('404 redrect fired for url', url, window.location.href);
+                //return this.doRequest(this.BaseURL + '404');
             });
         });
     }

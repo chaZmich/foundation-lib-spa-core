@@ -182,8 +182,8 @@ export class ContentDeliveryAPI implements IContentDeliveryAPi
         if (expand) url.searchParams.set('expand', expand.map(s => encodeURIComponent(s)).join(','));
         return this.doRequest<PathResponse<T,C>>(url).catch(e => 
         {
-            console.log('404 redrect fired', window.location.href);
-            return this.doRequest<PathResponse<T,C>>(this.BaseURL + '404');
+            console.log('404 redrect fired for url', url, window.location.href);
+           // return this.doRequest<PathResponse<T,C>>(this.BaseURL + '404');
         });
     }
 
