@@ -180,10 +180,15 @@ export class ContentDeliveryAPI implements IContentDeliveryAPi
         const url = new URL(path.startsWith('/') ? path.substr(1) : path, this.BaseURL);
         if (select) url.searchParams.set('select', select.map(s => encodeURIComponent(s)).join(','));
         if (expand) url.searchParams.set('expand', expand.map(s => encodeURIComponent(s)).join(','));
-        return this.doRequest<PathResponse<T,C>>(url).catch(e => 
+        return this.doRequest<PathResponse<T,C>>(url, {
+              validateStatus: function (status) {
+                    return (status >= 200 && status < 300) || status == 404;
+                },
+        }).catch(e => 
         {
             console.log('404 redrect fired for url', url, window.location.href);
-           // return this.doRequest<PathResponse<T,C>>(this.BaseURL + '404');
+            //this.create
+            return this.doRequest<PathResponse<T,C>>(this.BaseURL + '404');
         });
     }
 

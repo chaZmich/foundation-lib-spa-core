@@ -157,9 +157,14 @@ export class ContentDeliveryAPI {
                 url.searchParams.set('select', select.map(s => encodeURIComponent(s)).join(','));
             if (expand)
                 url.searchParams.set('expand', expand.map(s => encodeURIComponent(s)).join(','));
-            return this.doRequest(url).catch(e => {
+            return this.doRequest(url, {
+                validateStatus: function (status) {
+                    return (status >= 200 && status < 300) || status == 404; // default
+                },
+            }).catch(e => {
                 console.log('404 redrect fired for url', url, window.location.href);
-                //return this.doRequest(this.BaseURL + '404');
+                //this.create
+                return this.doRequest(this.BaseURL + '404');
             });
         });
     }
